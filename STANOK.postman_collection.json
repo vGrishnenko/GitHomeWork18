@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "264c25cf-15bb-451e-b0ae-72b11155589e",
+		"name": "STANOK",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "STANOK_Authorization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.collectionVariables.set(\"token\", jsonData.jwt);\r",
+							"\r",
+							"console.log(\"token value =\" + pm.collectionVariables.get(\"token\"));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"iplcugw@metalunits.com\",\"password\":\"1QAZ2WSX\"}"
+				},
+				"url": {
+					"raw": "https://stanok-qa.ossystem.ua/api/v1/auth/login",
+					"protocol": "https",
+					"host": [
+						"stanok-qa",
+						"ossystem",
+						"ua"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "STANOK_Register",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const email = pm.variables.replaceIn(\"{{$timestamp}}!{{$randomFirstName}}@metalunits.com\")\r",
+							".toLowerCase()\r",
+							"\r",
+							"pm.collectionVariables.set(\"email\", email);\r",
+							"console.log(\"my email = \" + pm.collectionVariables.get(\"email\"));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"{{email}}\",\"password\":\"1QAZ2WSX\",\"profileType\":1}"
+				},
+				"url": {
+					"raw": "https://stanok-qa.ossystem.ua/api/v1/auth/create",
+					"protocol": "https",
+					"host": [
+						"stanok-qa",
+						"ossystem",
+						"ua"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "STANOK_Subscribe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOjE0MTg4LCJlbWFpbCI6Im96cnV5ZmJiQG1ldGFsdW5pdHMuY29tIiwiaWF0IjoxNjM2MjgzMDgwLCJleHAiOjE2MzY1NDIyODB9.GgErdlv6UrrEJ-g1u9fBNmTnEXC2Fc7fW0Nzn07qR0Y"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"{{email}}\"}"
+				},
+				"url": {
+					"raw": "https://stanok-qa.ossystem.ua/api/v1/subscription/subscribe",
+					"protocol": "https",
+					"host": [
+						"stanok-qa",
+						"ossystem",
+						"ua"
+					],
+					"path": [
+						"api",
+						"v1",
+						"subscription",
+						"subscribe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "STANOK_Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiMGFhMmNjMGUtZjE2My00YmIyLTllMzAtNDA4YTM1NWZlMDQ5IiwidXNlcklkIjoxNDAyNywiaGFzaENoZWNrIjpmYWxzZSwiaWF0IjoxNjM2MjgzMjI0LCJleHAiOjE2MzYyODY4MjR9._h5P6k3GtPna0ForrCdGvmmqKMzFTgTzVAuOzT56KYE"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"avatar\":null,\"firstName\":\"OSS\",\"lastName\":\"Viktor\",\"appeal\":0,\"country\":334,\"city\":\"Consectetur et voluptatum tempora et ea reprehenderit harum excepturi ad sed deserunt\",\"zip\":\"98107\",\"desc\":\"Ð¾Ð»ÑÐ¾Ð´Ð»Ð¾Ð¶Ð´ ÑÐ¿Ð¾Ð¿ÑÐ»ÑÐ¾Ð±Ð´ ÑÐ¿Ð¿ÑÑÐ¿Ð»Ð¿ÑÐ»\",\"languages\":[13],\"mobilePhone\":\"123456\"}"
+				},
+				"url": {
+					"raw": "https://stanok-qa.ossystem.ua/api/v1/users/profile/main-info",
+					"protocol": "https",
+					"host": [
+						"stanok-qa",
+						"ossystem",
+						"ua"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"profile",
+						"main-info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "STANOK_Complaint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiMGFhMmNjMGUtZjE2My00YmIyLTllMzAtNDA4YTM1NWZlMDQ5IiwidXNlcklkIjoxNDAyNywiaGFzaENoZWNrIjpmYWxzZSwiaWF0IjoxNjM2MjgzMjI0LCJleHAiOjE2MzYyODY4MjR9._h5P6k3GtPna0ForrCdGvmmqKMzFTgTzVAuOzT56KYE"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"posterId\":2015,\"complaintReasonId\":2,\"comment\":\"sefsefsefse\"}"
+				},
+				"url": {
+					"raw": "https://stanok-qa.ossystem.ua/api/v1/complaint/create",
+					"protocol": "https",
+					"host": [
+						"stanok-qa",
+						"ossystem",
+						"ua"
+					],
+					"path": [
+						"api",
+						"v1",
+						"complaint",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "email",
+			"value": ""
+		},
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}
